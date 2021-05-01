@@ -1,0 +1,6 @@
+[submodule "packages/classification_model"]
+	path = packages/classification_model
+	url = https://github.com/Windact/classification_model.git
+[submodule "packages/ml_api"]
+	path = packages/ml_api
+	url = https://github.com/Windact/ml_api.git
