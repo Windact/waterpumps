@@ -1,7 +1,7 @@
 version: 2.1
 jobs:
   test_classification_model:
-    working_directory: ~/project
+    working_directory: ~/
     docker:
       - image: circleci/python:3.8.5
     steps:
