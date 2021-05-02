@@ -53,7 +53,7 @@ jobs:
           command: |
             . venv/bin/activate
             chmod +x ./scripts/publish_model.sh
-            PYTHONPATH=./packages/classification_model python3 packages/classification_model/train_pipeline.py
+            PYTHONPATH=./packages/classification_model python3 packages/classification_model/classification_model/train_pipeline.py
             ./scripts/publish_model.sh ./packages/classification_model/
 workflows:
   version: 2.1
