@@ -50,7 +50,7 @@ jobs:
           command: |
             . venv/bin/activate
             pip install -r packages/ml_api/requirements.txt
-            py.test -vv packages/ml_api/tests
+            py.test -vv packages/ml_api/tests -m "not differential"
       - save_cache:
           paths:
             - "/venv"
@@ -87,6 +87,26 @@ jobs:
             - "/venv"
           key: py-deps-{{checksum "packages/classification_model/requirements.txt"}}
 
+differential_tests:
+  <<: *defaults
+  steps:
+      - checkout
+      - run: git submodule sync
+      - run: git submodule update --init
+      - *prepare_venv
+      - run:
+          name: Capture previous model predictions
+          command: |
+            . venv/bin/activate
+            pip install -r packages/ml_api/diff_test_requirements.txt
+            PYTHONPATH=./packages/ml_api python3 packages/ml_api/tests/differential_tests/capture_model_prediction.py
+      - run:
+          name: Run diffrential_test
+          command: |
+            . venv/bin/activate
+            pip install -r packages/ml_api/requirements.txt
+            py.test -vv packages/ml_api/tests -m differential
+
 workflows:
   version: 2.1
   test-all:
@@ -97,6 +117,7 @@ workflows:
           requires:
             - test_classification_model
             - test_ml_api
+            - differential_tests
           filters:
             branches:
               only:
