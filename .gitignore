@@ -1,0 +1,16 @@
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# pytest cahces
+**/pytest_cache
+
+# tox file generated during local branch testing
+/**.tox/
+
+# vscode
+**/.vscode
+
+# Jupyter Notebook
+**/.ipynb_checkpoints
