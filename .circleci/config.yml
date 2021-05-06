@@ -107,6 +107,18 @@ jobs:
               pip install -r packages/ml_api/requirements.txt
               py.test -vv packages/ml_api/tests -m differential
 
+  deploy_to_heroku:
+    <<: *defaults
+    steps:
+        - checkout
+        - run: git submodule sync
+        - run: git submodule update --init
+        - run:
+            name: Deploy to Heroku
+            command: |
+              git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git main
+
+
 workflows:
   version: 2.1
   test-all:
@@ -119,6 +131,13 @@ workflows:
             - test_classification_model
             - test_ml_api
             - differential_tests
+          filters:
+            branches:
+              only:
+                - main
+      - deploy_to_heroku:
+          requires:
+            - train_and_upload_classification_model
           filters:
             branches:
               only:
