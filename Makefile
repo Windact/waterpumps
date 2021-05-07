@@ -8,6 +8,11 @@ build-ml-api-heroku:
 push-ml-api-heroku:
 	docker push registry.heroku.com/${HEROKU_APP_NAME}/web:latest
 
+aws-setup:
+	aws configure set aws_access_key_id ${AWS_ACCESS_KEY}
+	aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
+	aws configure set default.region ${AWS_DEFAULT_REGION}
+
 build-ml-api-aws:
 	docker build --build-arg PIP_EXTRA_INDEX_URL=${PIP_EXTRA_INDEX_URL} -t $(NAME):$(COMMIT_ID) .
 

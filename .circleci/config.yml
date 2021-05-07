@@ -153,6 +153,7 @@ jobs:
           name: Publishing docker image to aws ECR and deploying container to ECS
           command: |
             sudo pip install awscli
+            make aws-setup
             aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
             make build-ml-api-aws tag-ml-api push-ml-api-aws
             aws ecs update-service --cluster ${ML_API_CLUSTER_NAME} --service ${ML_API_SERVICE_NAME} --task-definition  ${ML_API_TASK_NAME} --force-new-deployment  
