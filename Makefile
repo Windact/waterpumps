@@ -1,5 +1,5 @@
 NAME=pipes-ml-api
-# COMMIT_ID=$(shell git rev-parse HEAD)
+COMMIT_ID=$(shell git rev-parse HEAD)
 
 
 build-ml-api-heroku:
