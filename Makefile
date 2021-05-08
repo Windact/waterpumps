@@ -1,5 +1,6 @@
 NAME=pipes-ml-api
 COMMIT_ID=$(shell git rev-parse HEAD)
+AWS_ECR_REPO_NAME = 
 
 
 build-ml-api-heroku:
@@ -14,12 +15,13 @@ aws-setup:
 	aws configure set default.region ${AWS_DEFAULT_REGION}
 
 build-ml-api-aws:
-	docker build --build-arg PIP_EXTRA_INDEX_URL=${PIP_EXTRA_INDEX_URL} -t $(NAME):$(COMMIT_ID) .
+	docker build --build-arg PIP_EXTRA_INDEX_URL=${PIP_EXTRA_INDEX_URL} -t $(AWS_ECR_REPO_NAME):$(COMMIT_ID) .
 
 tag-ml-api:
-	docker tag $(NAME):$(COMMIT_ID) ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/$(NAME):$(COMMIT_ID)
+	docker tag $(AWS_ECR_REPO_NAME):$(COMMIT_ID) ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/$(AWS_ECR_REPO_NAME):$(COMMIT_ID)
 
 push-ml-api-aws:
-	docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/$(NAME):$(COMMIT_ID)
+	docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/$(AWS_ECR_REPO_NAME):$(COMMIT_ID)
+
 
 
