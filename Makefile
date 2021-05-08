@@ -1,6 +1,5 @@
 NAME=pipes-ml-api
 COMMIT_ID=$(shell git rev-parse HEAD)
-AWS_ECR_REPO_NAME = 
 
 
 build-ml-api-heroku:
