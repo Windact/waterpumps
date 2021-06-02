@@ -23,17 +23,17 @@ jobs:
       - *prepare_venv
       - restore_cache:
           keys:
-            - py-deps-{{checksum "packages/classification_model/requirements.txt"}}
+            - py-deps-{{checksum "packages/classification_model/test_requirements.txt"}}
       - run:
           name: Running tests
           command: |
             . venv/bin/activate
-            pip install -r packages/classification_model/requirements.txt
+            pip install -r packages/classification_model/test_requirements.txt
             py.test -vv packages/classification_model/tests
       - save_cache:
           paths: 
             - "/venv"
-          key: py-deps-{{checksum "packages/classification_model/requirements.txt"}}
+          key: py-deps-{{checksum "packages/classification_model/test_requirements.txt"}}
 
   test_ml_api:
     <<: *defaults
