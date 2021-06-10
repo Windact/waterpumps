@@ -44,17 +44,17 @@ jobs:
       - *prepare_venv
       - restore_cache:
           keys:
-            - py-deps-{{checksum "packages/ml_api/requirements.txt"}}
+            - py-deps-{{checksum "packages/ml_api/test_requirements.txt"}}
       - run:
           name: Running tests
           command: |
             . venv/bin/activate
-            pip install -r packages/ml_api/requirements.txt
+            pip install -r packages/ml_api/test_requirements.txt
             py.test -vv packages/ml_api/tests -m "not differential"
       - save_cache:
           paths:
             - "/venv"
-          key: py-deps-{{checksum "packages/ml_api/requirements.txt"}}
+          key: py-deps-{{checksum "packages/ml_api/test_requirements.txt"}}
 
   train_and_upload_classification_model:
     <<: *defaults
