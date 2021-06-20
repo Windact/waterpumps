@@ -95,12 +95,6 @@ jobs:
         - run: git submodule update --init
         - *prepare_venv
         - run:
-            name: Capture previous model predictions
-            command: |
-              . venv/bin/activate
-              pip install -r packages/ml_api/diff_test_requirements.txt
-              PYTHONPATH=./packages/ml_api python3 packages/ml_api/tests/differential_tests/capture_model_prediction.py
-        - run:
             name: Run diffrential_test
             command: |
               . venv/bin/activate
