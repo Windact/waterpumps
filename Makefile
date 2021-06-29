@@ -8,11 +8,11 @@ build-ml-api-heroku:
 push-ml-api-heroku:
 	docker push registry.heroku.com/${HEROKU_APP_NAME}/web:latest
 
-build-compose-ml-api-heroku:
-	docker-compose -f packages/ml_api/docker/docker-compose.yml build --build-arg PIP_EXTRA_INDEX_URL=${PIP_EXTRA_INDEX_URL} NAME=${NAME}
+# build-compose-ml-api-heroku:
+# 	docker-compose -f packages/ml_api/docker/docker-compose.yml build --build-arg PIP_EXTRA_INDEX_URL=${PIP_EXTRA_INDEX_URL} NAME=${NAME}
  
-push-compose-ml-api-heroku:
-	docker-compose push registry.heroku.com/${HEROKU_APP_NAME}/web:latest
+# push-compose-ml-api-heroku:
+# 	docker-compose push registry.heroku.com/${HEROKU_APP_NAME}/web:latest
 
 aws-setup:
 	aws configure set aws_access_key_id ${AWS_ACCESS_KEY}
