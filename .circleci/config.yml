@@ -98,7 +98,7 @@ jobs:
             name: Run diffrential_test
             command: |
               . venv/bin/activate
-              pip install -r packages/ml_api/requirements.txt
+              pip install -r packages/ml_api/test_requirements.txt
               py.test -vv packages/ml_api/tests -m differential
 
   deploy_to_heroku_without_docker:
