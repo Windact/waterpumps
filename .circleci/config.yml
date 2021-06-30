@@ -42,19 +42,14 @@ jobs:
       - run: git submodule sync
       - run: git submodule update --init
       - *prepare_venv
-      - restore_cache:
-          keys:
-            - py-deps-{{checksum "packages/ml_api/test_requirements.txt"}}
+      - setup_remote_docker:
+          docker_layer_caching: false
       - run:
           name: Running tests
           command: |
             . venv/bin/activate
-            docker-compose -f packages/ml_api/docker/docker-compose.test.yml up --build
+            docker-compose -f packages/ml_api/docker/docker-compose.test.yml up --build -d
             py.test -vv packages/ml_api/tests -m "not differential"
-      - save_cache:
-          paths:
-            - "/venv"
-          key: py-deps-{{checksum "packages/ml_api/test_requirements.txt"}}
 
   train_and_upload_classification_model:
     <<: *defaults
@@ -94,11 +89,13 @@ jobs:
         - run: git submodule sync
         - run: git submodule update --init
         - *prepare_venv
+        - setup_remote_docker:
+            docker_layer_caching: false
         - run:
             name: Run diffrential_test
             command: |
               . venv/bin/activate
-              docker-compose -f packages/ml_api/docker/docker-compose.test.yml up --build
+              docker-compose -f packages/ml_api/docker/docker-compose.test.yml up --build -d
               py.test -vv packages/ml_api/tests -m differential
 
   deploy_to_heroku_without_docker:
