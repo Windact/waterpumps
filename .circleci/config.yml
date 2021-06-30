@@ -48,7 +48,8 @@ jobs:
           name: Running tests
           command: |
             . venv/bin/activate
-            docker-compose -f packages/ml_api/docker/docker-compose.test.yml up --build -d
+            docker-compose -f packages/ml_api/docker/docker-compose.test.yml build --build-arg PIP_EXTRA_INDEX_URL_VALUE=${PIP_EXTRA_INDEX_URL} --force-rm
+            docker-compose -f packages/ml_api/docker/docker-compose.test.yml start ml_api_test database_test
             py.test -vv packages/ml_api/tests -m "not differential"
 
   train_and_upload_classification_model:
@@ -95,7 +96,8 @@ jobs:
             name: Run diffrential_test
             command: |
               . venv/bin/activate
-              docker-compose -f packages/ml_api/docker/docker-compose.test.yml up --build -d
+              docker-compose -f packages/ml_api/docker/docker-compose.test.yml build --build-arg PIP_EXTRA_INDEX_URL_VALUE=${PIP_EXTRA_INDEX_URL} --force-rm
+              docker-compose -f packages/ml_api/docker/docker-compose.test.yml start ml_api_test database_test
               py.test -vv packages/ml_api/tests -m differential
 
   deploy_to_heroku_without_docker:
