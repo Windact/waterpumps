@@ -51,10 +51,11 @@ jobs:
           name: Running tests
           command: |
             . venv/bin/activate
-            pip install -r packages/ml_api/test_requirements.txt
-            docker-compose -f packages/ml_api/docker/docker-compose.test.yml build --build-arg PIP_EXTRA_INDEX_URL_VALUE=${PIP_EXTRA_INDEX_URL} --force-rm
+            docker-compose -f packages/ml_api/docker/docker-compose.yml build --build-arg PIP_EXTRA_INDEX_URL_VALUE=${PIP_EXTRA_INDEX_URL}--force-rm
             docker-compose -f packages/ml_api/docker/docker-compose.test.yml up -d
+            docker-compose -f packages/ml_api/docker/docker-compose.test.yml exec ml_api_test sh
             py.test -vv packages/ml_api/tests -m "not differential"
+            exit
       - save_cache:
           paths: 
             - "/venv"
@@ -107,10 +108,11 @@ jobs:
             name: Run diffrential_test
             command: |
               . venv/bin/activate
-              pip install -r packages/ml_api/test_requirements.txt
-              docker-compose -f packages/ml_api/docker/docker-compose.test.yml build --build-arg PIP_EXTRA_INDEX_URL_VALUE=${PIP_EXTRA_INDEX_URL} --force-rm
+              docker-compose -f packages/ml_api/docker/docker-compose.yml build --build-arg PIP_EXTRA_INDEX_URL_VALUE=${PIP_EXTRA_INDEX_URL}--force-rm
               docker-compose -f packages/ml_api/docker/docker-compose.test.yml up -d
+              docker-compose -f packages/ml_api/docker/docker-compose.test.yml exec ml_api_test sh
               py.test -vv packages/ml_api/tests -m differential
+              exit
         - save_cache:
             paths: 
               - "/venv"
