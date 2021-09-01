@@ -26,6 +26,7 @@ jobs:
             - py-deps-{{checksum "packages/classification_model/test_requirements.txt"}}
       - run:
           name: Running tests
+          no_output_timeout: 30m
           command: |
             . venv/bin/activate
             pip install -r packages/classification_model/test_requirements.txt
@@ -49,6 +50,7 @@ jobs:
           docker_layer_caching: false
       - run:
           name: Running tests
+          no_output_timeout: 30m
           command: |
             . venv/bin/activate
             docker-compose -f packages/ml_api/docker/docker-compose.yml build --build-arg PIP_EXTRA_INDEX_URL_VALUE=${PIP_EXTRA_INDEX_URL} --force-rm
@@ -106,6 +108,7 @@ jobs:
             docker_layer_caching: false
         - run:
             name: Run diffrential_test
+            no_output_timeout: 30m
             command: |
               . venv/bin/activate
               docker-compose -f packages/ml_api/docker/docker-compose.yml build --build-arg PIP_EXTRA_INDEX_URL_VALUE=${PIP_EXTRA_INDEX_URL} --force-rm
